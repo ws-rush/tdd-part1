@@ -20,12 +20,12 @@ function createApp(database: Database) {
     const age = req.query.age ? parseInt(req.query.age as string) : undefined;
     const type = req.query.type as string;
     const baseCost = database.findBasePriceByType(type)!.cost;
-    const date = parsePlainDate(req.query.date as string);
+    const date = parseDate(req.query.date as string);
     const cost = calculateCost(age, type, date, baseCost);
     res.json({ cost });
   });
 
-  function parsePlainDate(dateString: string | undefined): Temporal.PlainDate | undefined { if (dateString) { return Temporal.PlainDate.from(dateString) } }
+  function parseDate(dateString: string | undefined): Temporal.PlainDate | undefined { if (dateString) { return Temporal.PlainDate.from(dateString) } }
 
   function calculateCost(age: number | undefined, type: string, date: Temporal.PlainDate | undefined, baseCost: number) {
     if (type === "night") {
